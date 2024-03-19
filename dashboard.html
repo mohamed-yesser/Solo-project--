@@ -4,22 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Company Management System</title>
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="myDiv">
-        <div>
-
-
-
-            
+        <div id="hireSection" class="section-container">
+            <div id="innerHireSection">
+                <h2>Hire Employee</h2>
+                <div id="labelsAndInputs">
+                    <div id="leftSide">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" id="firstName"><br>
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" id="lastName"><br>
+                        <label for="age" id="ageLabel">Age:</label>
+                        <input type="number" id="age"><br>
+                        <label for="department">Department:</label>
+                        <input type="text" id="department"><br>
+                        <label for="email">Email:</label>
+                        <input type="email" id="email"><br>
+                        <button id="hireButton">Hire</button>
+                    </div>
+                    <div id="rightSide">
+                        <div class="whiteboard">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         
-
-
-
-
+        <div id="fireSection" class="section-container">
+            <h2 id="fireEmployeeH2">Fire Employee</h2>
+            <div id="labelAndInput2">
+            <label for="employeeId">Employee ID:</label>
+            <input type="text" id="employeeId"><br>
+            <button id="fireButton">Fire</button>
+        </div>
+        </div>
+        
+        <div id="databaseSection" class="section-container">
+            <h2 id="databaseH2">Database</h2>
+            <button id="viewDatabaseButton">View Database</button> 
+        </div>
     </div>
     <script src="manager.js"></script>
 </body>
