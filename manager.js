@@ -136,7 +136,7 @@ function showDatabase() {
 
     
     var inputStyle = "width: 100px; margin-right: 10px;";
-    searchDiv.append("<input type='text' id='nameInput' placeholder='First Name' style='" + inputStyle + "'>")
+    searchDiv.append("<input type='text' id='firstNameInput' placeholder='First Name' style='" + inputStyle + "'>")
     searchDiv.append("<input type='text' id='lastNameInput' placeholder='Last Name' style='" + inputStyle + "'>")
     searchDiv.append("<input type='text' id='departmentInput' placeholder='Department' style='" + inputStyle + "'>")
     searchDiv.append("<input type='number' id='ageInput' placeholder='Age' style='" + inputStyle + "'>")

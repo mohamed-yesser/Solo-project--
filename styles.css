@@ -148,3 +148,7 @@ padding-left: 200px;
 }
 
 
+p {
+    background-color: transparent;
+    color: undefined;
+}
