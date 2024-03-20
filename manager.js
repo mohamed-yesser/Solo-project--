@@ -1,76 +1,61 @@
 
-
-
-document.getElementById("login-btn").addEventListener("click", function() {
-  console.log("Login button clicked")
- 
-   
-    window.location.href = "dashboard.html"
+$(document).ready(function() {
+    $("#login-btn").click(function() {
+        console.log("Login button clicked");
+        window.location.href = "dashboard.html";
+    });
 });
 
 
 
 
-function Manager (){
-return {
-employeeList : [] ,
-createEmployee : createEmployee,
-hireEmployee : hireEmployee,
-fireEmployee : fireEmployee, 
-searchByCrit : searchByCrit,
-display : display,
-rateEmployee : rateEmployee,
-numberOfemployee : 0
-
-}
-
-}
 
 
-
-
-
-const createEmployee = function(firstName , lastName , age , department , email ){
-
-return {
-
-firstName : firstName,
-lastName : lastName,
-age : age,
-department : department,
-email : email ,
-rating : 0,
-id : generateId(),
-dateOfjoining : date()
-}
-
+function Manager() {
+    return {
+        employeeList: [],
+        createEmployee: createEmployee,
+        hireEmployee: hireEmployee,
+        fireEmployee: fireEmployee,
+        searchByCrit: searchByCrit,
+        display: display,
+        rateEmployee: rateEmployee,
+        numberOfEmployees: 0
+    };
 }
 
 
+const createEmployee = function(firstName, lastName, age, department, email) {
+    return {
+        firstName: firstName,
+        lastName: lastName,
+        age: age,
+        department: department,
+        email: email,
+        rating: 0,
+        id: generateId()
+    };
+};
 
+const hireEmployee = function(employee) {
+    this.employeeList.push(employee);
+    this.numberOfEmployees++;
+    const message = employee.firstName + " " + employee.lastName + " has been hired in the " + employee.department + " department";
+    display(message);
+};
 
-
-const hireEmployee = function (employee) {
-  this.employeeList.push(employee)
-  this.numberOfemployee++
-  const message = employee.firstName + ' ' + employee.lastName + ' has been hired in the ' + employee.department + ' department'
-  displayEmployee(message)
-}
-
-
-
-const fireEmployee = function (id) {
-  for (var i = 0; i < this.employeeList.length; i++) {
-      if (this.employeeList[i].id === id) {
-          const employee = this.employeeList[i]
-          this.employeeList.splice(i, 1)
-          this.numberOfemployee--
-          const message = employee.firstName + ' ' + employee.lastName + ' has been hired in the ' + employee.department + ' department'
-          displayEmployee(message)
-          break
-      }
-  }
-}
+const fireEmployee = function(id) {
+    for (var i = 0; i < this.employeeList.length; i++) {
+        if (this.employeeList[i].id === id) {
+            const employee = this.employeeList[i];
+            this.employeeList.splice(i, 1);
+            this.numberOfEmployees--;
+            const message = employee.firstName + " " + employee.lastName + " has been fired from the " + employee.department + " department";
+            display(message);
+            break;
+        }
+    }
+};
 
 
 
@@ -94,9 +79,9 @@ for (var i = 0 ; i < this.employeeList.length ; i ++ ){
 const generateId = function () {
     var count = 1;
     return function () {
-      var t = count;
+      var t = count
       count = count + 1;
-      return t;
+      return t
     };
   }
 
@@ -157,6 +142,40 @@ const searchByRating = function (Rating) {
 const display = function (message) {
   console.log(message)
 }
+
+
+
+
+
+
+
+
+
+
+   
+    var manager1 = Manager();
+
+    $('#hireButton').on('click', function() {
+        
+        var firstName = $('#firstName').val();
+        var lastName = $('#lastName').val();
+        var age = $('#age').val();
+        var department = $('#department').val();
+        var email = $('#email').val();
+
+        
+        var employee = manager1.createEmployee(firstName, lastName, age, department, email);
+
+        manager1.hireEmployee(employee);
+
+       
+        console.log("Employee List:", manager1.employeeList);
+        console.log('manager 1',manager1)
+    });
+
+
+
+
 
 
 
