@@ -4,8 +4,8 @@ $(document).ready(function() {
         console.log("Login button clicked");
         window.location.href = "dashboard.html";
     });
-});
 
+});
 
 
 
@@ -24,6 +24,9 @@ function Manager() {
     };
 }
 
+const displayEmployeeCount = function() {
+    $("#employeeCount").text("Total Employees: " + manager1.numberOfEmployees)
+}
 
 const createEmployee = function(firstName, lastName, age, department, email) {
     return {
@@ -38,29 +41,29 @@ const createEmployee = function(firstName, lastName, age, department, email) {
 };
 
 const hireEmployee = function(employee) {
-
     this.employeeList.push(employee);
     this.numberOfEmployees++;
-    const message = employee.firstName + " " + employee.lastName + " has been hired in the " + employee.department + " department";
-    display(message)
+    const message = employee.firstName + " " + employee.lastName + " id n° : " + employee.id+ " " + " has been hired in the " + employee.department + " department";
+    display(message);
     displayOnboard(message);
+    displayEmployeeCount()
 };
 
 const fireEmployee = function(id) {
-    
-    id = parseInt(id)
+    id = parseInt(id);
 
     for (var i = 0; i < this.employeeList.length; i++) {
         var employeeId = parseInt(this.employeeList[i].id)
-        
+
         if (employeeId === id) {
             const employee = this.employeeList[i]
             this.employeeList.splice(i, 1)
             this.numberOfEmployees--
-            const message = employee.firstName + " " + employee.lastName + " has been fired from the " + employee.department + " department";
+            const message = employee.firstName + " " + employee.lastName + " id n° : " + employee.id+ " " +" has been fired from the " + employee.department + " department";
             display(message)
-            displayOnboard(message)
-        break
+            displayOnboard(message, "red");
+            displayEmployeeCount()
+            break;
         }
     }
 };
@@ -142,7 +145,7 @@ const searchById = function (id) {
 
 const searchByRating = function (Rating) {
     return this.employeeList.filter(employee => 
-        employee.rating = Rating
+        employee.rating === Rating
     )
 }
 
@@ -163,6 +166,7 @@ const display = function (message) {
 
    
     var manager1 = Manager();
+    
 
   $('#hireButton').on('click', function() {
     var firstName = $('#firstName').val()
@@ -172,14 +176,14 @@ const display = function (message) {
     var email = $('#email').val()
 
     if (!firstName || !lastName || !age || !department || !email) {
-        if (!firstName) displayOnboard('Please enter a first name for your employee')
-        if (!lastName) displayOnboard('Please enter a last name for your employee')
-        if (!age) displayOnboard('Please enter an age for your employee')
-        if (!department) displayOnboard('Please enter a department for your employee')
-        if (!email) displayOnboard('Please enter an email for your employee')
+        if (!firstName) displayOnboard('Please enter a first name for your employee', "black")
+        if (!lastName) displayOnboard('Please enter a last name for your employee', "black")
+        if (!age) displayOnboard('Please enter an age for your employee', "black")
+        if (!department) displayOnboard('Please enter a department for your employee', "black")
+        if (!email) displayOnboard('Please enter an email for your employee', "black")
         return
     }
-
+    else
    
     var employee = manager1.createEmployee(firstName, lastName, age, department, email)
 
@@ -201,6 +205,72 @@ const display = function (message) {
     
 
 
-    const displayOnboard = function(message) {
-        $(".whiteboard").append("<p>" + message + "</p>")}
+    const displayOnboard = function(message, color) {
+        $(".whiteboard").append("<p style='color: " + color + ";'>" + message + "</p>");
+    };
+
+
+
+     $('#clearWhiteboard').on('click', function() {
+         $('.whiteboard').empty()
+    })
+        
+    
+
+
+
+
+    function displayEmployees() {
+        
+        $("#databaseSection").empty();
+        manager1.employeeList.forEach(function(employee) {
+            
+            var employeeDiv = $("<div></div>").addClass("employee");
+
+            employeeDiv.css({
+                "border": "1px solid black",
+                "margin-bottom": "10px",
+                "padding": "10px"
+            });
+    
+            employeeDiv.append("<p><strong>First Name:</strong> " + employee.firstName + "</p>");
+            employeeDiv.append("<p><strong>Last Name:</strong> " + employee.lastName + "</p>");
+            employeeDiv.append("<p><strong>Age:</strong> " + employee.age + "</p>");
+            employeeDiv.append("<p><strong>Department:</strong> " + employee.department + "</p>");
+            employeeDiv.append("<p><strong>Email:</strong> " + employee.email + "</p>");
+            employeeDiv.append("<p><strong>Rating:</strong> " + employee.rating + "</p>");
+            employeeDiv.append("<p><strong>ID:</strong> " + employee.id + "</p>");
+    
+            $("#databaseSection").append(employeeDiv);
+        });
+    
+        var resetButton = $("<button>back</button>").addClass("reset-button");
+        
+    
+        resetButton.click(function() {
+            resetDatabaseSection();
+        });
+    
+        $("#databaseSection").append(resetButton);
+    }
+    
+    function resetDatabaseSection() {
+        $("#databaseSection").empty();
+        $("#databaseSection").append('<h2 id="databaseH2">Database</h2>');
+        $("#databaseSection").append('<p id="employeeCount">Total Employees: ' + manager1.employeeList.length + '</p>');
+        $("#databaseSection").append('<button id="viewDatabaseButton">View Database</button>');
+    
+
+        $("#viewDatabaseButton").click(function() {
+            showDatabase();
+        });
+    }
+    
+    function showDatabase() {
+        displayEmployees();
+    }
+    
+    $("#viewDatabaseButton").click(function() {
+        showDatabase();
+    });
     
