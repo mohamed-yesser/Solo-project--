@@ -33,26 +33,34 @@ const createEmployee = function(firstName, lastName, age, department, email) {
         department: department,
         email: email,
         rating: 0,
-        id: generateId()
+        id: idGenerator()
     };
 };
 
 const hireEmployee = function(employee) {
+
     this.employeeList.push(employee);
     this.numberOfEmployees++;
     const message = employee.firstName + " " + employee.lastName + " has been hired in the " + employee.department + " department";
-    display(message);
+    display(message)
+    displayOnboard(message);
 };
 
 const fireEmployee = function(id) {
+    
+    id = parseInt(id)
+
     for (var i = 0; i < this.employeeList.length; i++) {
-        if (this.employeeList[i].id === id) {
-            const employee = this.employeeList[i];
-            this.employeeList.splice(i, 1);
-            this.numberOfEmployees--;
+        var employeeId = parseInt(this.employeeList[i].id)
+        
+        if (employeeId === id) {
+            const employee = this.employeeList[i]
+            this.employeeList.splice(i, 1)
+            this.numberOfEmployees--
             const message = employee.firstName + " " + employee.lastName + " has been fired from the " + employee.department + " department";
-            display(message);
-            break;
+            display(message)
+            displayOnboard(message)
+        break
         }
     }
 };
@@ -85,6 +93,7 @@ const generateId = function () {
     };
   }
 
+const idGenerator = generateId()
 
 
 
@@ -155,28 +164,43 @@ const display = function (message) {
    
     var manager1 = Manager();
 
-    $('#hireButton').on('click', function() {
-        
-        var firstName = $('#firstName').val();
-        var lastName = $('#lastName').val();
-        var age = $('#age').val();
-        var department = $('#department').val();
-        var email = $('#email').val();
+  $('#hireButton').on('click', function() {
+    var firstName = $('#firstName').val()
+    var lastName = $('#lastName').val()
+    var age = $('#age').val()
+    var department = $('#department').val()
+    var email = $('#email').val()
 
-        
-        var employee = manager1.createEmployee(firstName, lastName, age, department, email);
+    if (!firstName || !lastName || !age || !department || !email) {
+        if (!firstName) displayOnboard('Please enter a first name for your employee')
+        if (!lastName) displayOnboard('Please enter a last name for your employee')
+        if (!age) displayOnboard('Please enter an age for your employee')
+        if (!department) displayOnboard('Please enter a department for your employee')
+        if (!email) displayOnboard('Please enter an email for your employee')
+        return
+    }
 
-        manager1.hireEmployee(employee);
+   
+    var employee = manager1.createEmployee(firstName, lastName, age, department, email)
 
-       
-        console.log("Employee List:", manager1.employeeList);
-        console.log('manager 1',manager1)
-    });
+    
+    manager1.hireEmployee(employee)
 
-
-
-
+    console.log("Employee List:", manager1.employeeList)
+});
 
 
 
 
+
+    $('#fireButton').on('click', function() {
+        var employeeId = $('#employeeId').val()
+        manager1.fireEmployee(employeeId)
+        console.log("Employee List after firing:", manager1.employeeList)
+    })
+    
+
+
+    const displayOnboard = function(message) {
+        $(".whiteboard").append("<p>" + message + "</p>")}
+    
